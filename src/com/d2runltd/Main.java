@@ -1,8 +1,6 @@
 package com.d2runltd;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -122,31 +120,45 @@ public class Main
         return C;
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         String filename;
 
-        long startTime = System.currentTimeMillis();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        int cores = Runtime.getRuntime().availableProcessors();
-        System.err.println("Number of cores:\t" + cores);
+        Integer threads = null;
+        int cores = Runtime.getRuntime().availableProcessors(), i = 1;
 
-        int threads;
-        if (args.length < 3)
+        System.out.println("Number of available cores:\t" + cores);
+
+        do
         {
-            filename = "files\\3.in";
-            threads = cores;
-        }
-        else
-        {
-            filename = args[1];
-            threads = Integer.parseInt(args[2]);
-        }
+            try
+            {
+                System.out.println("How many cores do you want to work on?: ");
+                threads = Integer.parseInt(bufferedReader.readLine());
+
+                if(threads > cores || threads< 1)
+                    throw new Exception();
+
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            } catch (Exception e)
+            {
+                System.out.println("Wrong input, Try again!");
+                i=-1;
+            }
+        } while (i<0);
+
+        filename = "files\\2000.in";   //change the matrix you want to work on here....
 
         List<ArrayList<ArrayList<Integer>>> matrices = read(filename);
 
         ArrayList<ArrayList<Integer>> A = matrices.get(0);
         ArrayList<ArrayList<Integer>> B = matrices.get(1);
+
+        long startTime = System.currentTimeMillis();
 
         int[][] C = parallelMult(A, B, threads);
 
