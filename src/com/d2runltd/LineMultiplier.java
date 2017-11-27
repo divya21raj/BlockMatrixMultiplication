@@ -5,14 +5,14 @@ import java.util.concurrent.Callable;
 
 public class LineMultiplier implements Callable<int[][]>
 {
-	ArrayList<ArrayList<Integer>> A;
-	ArrayList<ArrayList<Integer>> B;
-	int start;
-	int end;
-	public int[][] C;
+	private ArrayList<ArrayList<Integer>> A;
+	private ArrayList<ArrayList<Integer>> B;
+	private int start;
+	private int end;
+	private int[][] C;
 
-	public LineMultiplier(ArrayList<ArrayList<Integer>> a,
-						  ArrayList<ArrayList<Integer>> b, int s, int e)
+	LineMultiplier(ArrayList<ArrayList<Integer>> a,
+				   ArrayList<ArrayList<Integer>> b, int s, int e)
 	{
 		A = a;
 		B = b;
