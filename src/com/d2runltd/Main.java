@@ -91,7 +91,6 @@ public class Main
 
         for (int i = 0; i < A.size(); i += part)
         {
-            System.err.println(i);
             Callable<int[][]> worker = new LineMultiplier(A, B, i, i+part);
             Future<int[][]> submit = executor.submit(worker);
             list.add(submit);
@@ -151,7 +150,9 @@ public class Main
             }
         } while (i<0);
 
-        filename = "files\\2000.in";   //change the matrix you want to work on here....
+        System.out.println("Wait...");
+
+        filename = "files\\1000.in";   //change the matrix you want to work on here....
 
         List<ArrayList<ArrayList<Integer>>> matrices = read(filename);
 
