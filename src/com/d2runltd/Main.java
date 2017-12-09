@@ -79,13 +79,13 @@ public class Main
     }
 
     private static int[][] parallelMult(ArrayList<ArrayList<Integer>> A,
-                                        ArrayList<ArrayList<Integer>> B, int threadNumber)
+                                        ArrayList<ArrayList<Integer>> B, int coreNumber)
     {
         int[][] C = new int[A.size()][B.get(0).size()];
-        ExecutorService executor = Executors.newFixedThreadPool(threadNumber);
+        ExecutorService executor = Executors.newFixedThreadPool(coreNumber);
         List<Future<int[][]>> list = new ArrayList<>();
 
-        int part = A.size() / threadNumber;
+        int part = A.size() / coreNumber;
         if (part < 1)
             part = 1;
 
@@ -125,7 +125,7 @@ public class Main
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        Integer threads = null;
+        Integer coresInput = null;
         int cores = Runtime.getRuntime().availableProcessors(), i = 1;
 
         System.out.println("Number of available cores:\t" + cores);
@@ -135,9 +135,9 @@ public class Main
             try
             {
                 System.out.println("How many cores do you want to work on?: ");
-                threads = Integer.parseInt(bufferedReader.readLine());
+                coresInput = Integer.parseInt(bufferedReader.readLine());
 
-                if(threads > cores || threads< 1)
+                if(coresInput > cores || coresInput< 1)
                     throw new Exception();
 
             } catch (IOException e)
@@ -161,7 +161,7 @@ public class Main
 
         long startTime = System.currentTimeMillis();
 
-        int[][] C = parallelMult(A, B, threads);
+        int[][] C = parallelMult(A, B, coresInput);
 
         long endTime   = System.currentTimeMillis();
         long totalTime = endTime - startTime;
